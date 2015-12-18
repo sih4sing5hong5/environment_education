@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from os.path import join
+from random import randint
 
 from django.conf.global_settings import MEDIA_ROOT
 from django.db import models
@@ -9,6 +10,7 @@ import xlrd
 
 class xls檔案表(models.Model):
     xls檔案 = models.FileField()
+    揀題目數量 = 80
 
     @classmethod
     def 匯入xls(cls, xls檔案, 名=None):
@@ -29,6 +31,13 @@ class xls檔案表(models.Model):
             表格欄位[資料] = 第幾個
         for 第幾逝 in range(1, 表格.nrows):
             題目表.加題目(self, 第幾逝, 表格欄位, 表格.row_values(第幾逝))
+
+    def 隨機揀題號(self):
+        題目數量 = self.題目.count()
+        題號陣列 = []
+        for _ in range(self.揀題目數量):
+            題號陣列.append(randint(1, 題目數量))
+        return 題號陣列
 
 
 class 題目表(models.Model):
