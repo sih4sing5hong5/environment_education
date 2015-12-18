@@ -10,6 +10,7 @@ import xlrd
 
 class xls檔案表(models.Model):
     xls檔案 = models.FileField()
+    收錄時間 = models.DateTimeField(auto_now_add=True)
     揀題目數量 = 80
 
     @classmethod
@@ -23,6 +24,10 @@ class xls檔案表(models.Model):
         資料.匯入題目()
         return 資料
 
+    @classmethod
+    def 上新的檔案(cls):
+        return cls.objects.all().order_by('-收錄時間').first()
+
     def 匯入題目(self):
         表格檔 = xlrd.open_workbook(join(MEDIA_ROOT, self.xls檔案.path))
         表格 = 表格檔.sheet_by_index(0)
@@ -34,10 +39,11 @@ class xls檔案表(models.Model):
 
     def 隨機揀題號(self):
         題目數量 = self.題目.count()
-        題號陣列 = []
+        題目陣列 = []
         for _ in range(self.揀題目數量):
-            題號陣列.append(randint(1, 題目數量))
-        return 題號陣列
+            題號=randint(1, 題目數量)
+            題目陣列.append(self.題目.get(題號=題號))
+        return 題目陣列
 
 
 class 題目表(models.Model):

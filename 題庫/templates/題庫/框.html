@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+    <title>{% block 標題 %}環境教育擂臺{% endblock %}</title>
+    {% block extrahead %}{% endblock %}
+    {% load staticfiles %}
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <div id="sidebar"> {% block sidebar %}{% endblock %} </div>
+
+    <div id="container">
+
+
+        <div id="網頁內容">
+            {% block 網頁內容 %}{% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>
