@@ -9,7 +9,10 @@
 
 <body>
     <!-- SIDEBAR -->
-    <div id="sidebar"> {% block sidebar %}{% endblock %} </div>
+    <div id="sidebar"> {% block sidebar %}
+    <a href='{% url '看作答紀錄' %}'>看作答紀錄</a>
+    <a href='{% url '練習' %}'>練習</a>
+    {% endblock %} </div>
 
     <div id="container">
 

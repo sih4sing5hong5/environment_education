@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from django.conf.global_settings import MEDIA_ROOT
+from django.contrib.auth.models import User
+from django.db import models
+import json
 from os.path import join
 from random import randint
-
-from django.conf.global_settings import MEDIA_ROOT
-from django.db import models
 import xlrd
 
 
@@ -76,3 +77,43 @@ class 題目表(models.Model):
             答案=資料[表格欄位['答案']],
             解析=資料[表格欄位['解析']],
         )
+
+
+class 使用者表(User):
+
+    class Meta:
+        proxy = True
+
+
+class 作答紀錄表(models.Model):
+    使用者 = models.ForeignKey(User, related_name='作答紀錄')
+    xls檔案 = models.ForeignKey(xls檔案表)
+    作答時間 = models.DateTimeField(auto_now_add=True)
+    總題數 = models.IntegerField()
+    答錯題數 = models.IntegerField()
+    答錯題目 = models.CharField(max_length=20000)
+    答對題目 = models.CharField(max_length=20000)
+
+    @classmethod
+    def 試驗結果(cls, 使用者, xls檔案, 答錯題目, 答對題目):
+        return cls.objects.create(
+            使用者=使用者,
+            xls檔案=xls檔案,
+            總題數=len(答對題目) + len(答錯題目),
+            答錯題數=len(答錯題目),
+            答對題目=json.dumps(答對題目),
+            答錯題目=json.dumps(答錯題目),
+        )
+
+    @classmethod
+    def 揣出作答紀錄(cls, 使用者):
+        return cls.objects.filter(
+            使用者=使用者,
+            xls檔案=xls檔案表.上新的檔案(),
+        ).order_by('-作答時間')
+
+    def 答錯題目陣列(self):
+        return json.loads(self.答錯題目)
+
+    def 答對題目陣列(self):
+        return json.loads(self.答對題目)
