@@ -1,0 +1,19 @@
+{% extends "題庫/框.html" %}
+
+{% block 網頁內容 %}
+	<p> 總題數：{{ 總題數 }}</p>
+	<p> 答錯題數：{{ 答錯題數 }}</p>
+	<p>
+	答錯題目：
+    {% for 題號 in 答錯 %}
+    	<a href='{% url '看解釋' 題號 %}' target='_blank'>{{ 題號 }}</a>
+    {% endfor %}
+    </p>
+    
+	<p>
+	答對題目：
+    {% for 題號 in 答對 %}
+    	<input type='hidden' name='id[{{forloop.counter0}}]' value='{{題目.題號}}'>
+    {% endfor %}
+    </p>
+{% endblock %}

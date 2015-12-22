@@ -1,7 +1,8 @@
 {% extends "題庫/框.html" %}
 
 {% block 網頁內容 %}
-	<form>
+	<form method=post action='/送出答案'>
+	{% csrf_token %}
     {% for 題目 in 題目陣列 %}
     	<input type='hidden' name='id[{{forloop.counter0}}]' value='{{題目.題號}}'>
     {% endfor %}
@@ -18,5 +19,6 @@
         </tr>
     {% endfor %}
     </table>
+    <input type='submit' value='送出'/>
     </form>
 {% endblock %}

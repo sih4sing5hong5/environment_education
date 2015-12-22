@@ -41,9 +41,12 @@ class xls檔案表(models.Model):
         題目數量 = self.題目.count()
         題目陣列 = []
         for _ in range(self.揀題目數量):
-            題號=randint(1, 題目數量)
+            題號 = randint(1, 題目數量)
             題目陣列.append(self.題目.get(題號=題號))
         return 題目陣列
+
+    def 題號(self, 題號):
+        return self.題目.get(題號=題號)
 
 
 class 題目表(models.Model):
