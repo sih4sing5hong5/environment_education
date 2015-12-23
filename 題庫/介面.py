@@ -29,6 +29,7 @@ def 送出答案(request):
 def 看作答紀錄(request):
     網址 = '題庫/作答結果.html'
     return render(request, 網址, {
+        '作答狀況陣列': _管理員看著的作答狀況(request.user),
         '作答紀錄陣列': 作答紀錄表.揣出作答紀錄(request.user),
     })
 
@@ -40,7 +41,11 @@ def 看解釋(request, 題號):
         '題目': xls檔案.題號(題號),
     })
 
-
+def _管理員看著的作答狀況(user):
+    if (user.last_name,user.first_name,user.email) == ('鄭','強','ecologist0721@yahoo.com.tw'):
+        return 作答紀錄表.揣出全部作答狀況()
+    return []
+    
 def _提出題號佮答案(POST):
     for 第幾個 in range(xls檔案表.揀題目數量):
         try:

@@ -112,8 +112,17 @@ class 作答紀錄表(models.Model):
             xls檔案=xls檔案表.上新的檔案(),
         ).order_by('-作答時間')
 
+    @classmethod
+    def 揣出全部作答狀況(cls):
+        return cls.objects.filter(
+            xls檔案=xls檔案表.上新的檔案(),
+        ).order_by('-作答時間')
+
     def 答錯題目陣列(self):
         return json.loads(self.答錯題目)
 
     def 答對題目陣列(self):
         return json.loads(self.答對題目)
+
+    def 使用者名(self):
+        return self.使用者.last_name + self.使用者.first_name
