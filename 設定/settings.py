@@ -117,3 +117,5 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERSION': 'v2.3',
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
