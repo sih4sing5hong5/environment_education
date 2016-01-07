@@ -49,7 +49,7 @@ def 看解釋(request, 題號):
 
 
 def _管理員看著的作答狀況(user):
-    if (user.last_name, user.first_name, user.email) == ('鄭', '強', 'ecologist0721@yahoo.com.tw'):
+    if (user.email) in ('ecologist0721@yahoo.com.tw','ihcaoe@gmail.com'):
         return 作答紀錄表.揣出全部作答狀況()
     return []
 
