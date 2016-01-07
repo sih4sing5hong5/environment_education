@@ -41,9 +41,12 @@ class xls檔案表(models.Model):
     def 隨機揀題號(self):
         題目數量 = self.題目.count()
         題目陣列 = []
-        for _ in range(self.揀題目數量):
+        題號陣列 = set()
+        while len(題號陣列) < self.揀題目數量:
             題號 = randint(1, 題目數量)
-            題目陣列.append(self.題目.get(題號=題號))
+            if 題號 not in 題號陣列:
+                題號陣列.add(題號)
+                題目陣列.append(self.題目.get(題號=題號))
         return 題目陣列
 
     def 題號(self, 題號):
