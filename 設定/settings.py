@@ -117,5 +117,5 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERSION': 'v2.3',
     }
 }
-
+LOGOUT_ON_GET = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

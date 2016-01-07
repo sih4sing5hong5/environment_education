@@ -10,8 +10,13 @@
 <body>
     <!-- SIDEBAR -->
     <div id="sidebar"> {% block sidebar %}
-    <a href='{% url '看作答紀錄' %}'>看作答紀錄</a>
-    <a href='{% url '練習' %}'>練習</a>
+    <form method='post' action="{% url 'account_logout' %}">
+	    <a href='{% url '看作答紀錄' %}'>看作答紀錄</a>
+	    <a href='{% url '練習' %}'>練習</a>
+    	 {% csrf_token %}
+    	<input type='submit' value='{{ 名 }}登出'/>
+   	</form>
+    
     {% endblock %} </div>
 
     <div id="container">

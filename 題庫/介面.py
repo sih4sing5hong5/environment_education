@@ -9,8 +9,10 @@ from 題庫.models import 作答紀錄表
 def 練習(request):
     網址 = '題庫/作答.html'
     return render(request, 網址, {
+        '名': request.user.last_name + request.user.first_name,
         '題目陣列': xls檔案表.上新的檔案().隨機揀題號()
     })
+
 
 @login_required(login_url='/accounts/facebook/login')
 def 送出答案(request):
@@ -25,27 +27,33 @@ def 送出答案(request):
     作答紀錄表.試驗結果(request.user, xls檔案, 答錯, 答對)
     return redirect('看作答紀錄')
 
+
 @login_required(login_url='/accounts/facebook/login')
 def 看作答紀錄(request):
     網址 = '題庫/作答結果.html'
     return render(request, 網址, {
+        '名': request.user.last_name + request.user.first_name,
         '作答狀況陣列': _管理員看著的作答狀況(request.user),
         '作答紀錄陣列': 作答紀錄表.揣出作答紀錄(request.user),
     })
+
 
 @login_required(login_url='/accounts/facebook/login')
 def 看解釋(request, 題號):
     xls檔案 = xls檔案表.上新的檔案()
     網址 = '題庫/解釋.html'
     return render(request, 網址, {
+        '名': request.user.last_name + request.user.first_name,
         '題目': xls檔案.題號(題號),
     })
 
+
 def _管理員看著的作答狀況(user):
-    if (user.last_name,user.first_name,user.email) == ('鄭','強','ecologist0721@yahoo.com.tw'):
+    if (user.last_name, user.first_name, user.email) == ('鄭', '強', 'ecologist0721@yahoo.com.tw'):
         return 作答紀錄表.揣出全部作答狀況()
     return []
-    
+
+
 def _提出題號佮答案(POST):
     for 第幾個 in range(xls檔案表.揀題目數量):
         try:
