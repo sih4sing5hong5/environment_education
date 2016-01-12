@@ -1,14 +1,39 @@
-body
-{
-	font-size: 150%;
+body 
+   {font-size: 150%;
     background-color:#131314;
-    color:#6b6b6b;
-}
+    color:#6b6b6b;}
+h3 {
+	color:#ffffff;}
+a, a:link {
+	color:red;}
+a:visited {color:#aa0000}
 .li01 {
 	margin-top:20px;
 	color}
 ul {
-	list-style:none;
-}
+	list-style:none;}
 li {
 	padding:10px 0 0 0;}
+.p-題目 {
+	font-size:150%;
+	color:#ffffff;}
+.p-解析 {
+	font-size:150%;
+	color:#ffffff;
+}
+.p-答案 {
+	font-size:150%;
+	color:#ffffff;}
+#a-解析 {
+	/*border:1px solid #ffffff;*/
+	color:#171717;
+}
+#a-解析:hover {
+	color:#ffffff;
+}
+#a-答案 {
+	color:#171717;
+}
+#a-答案:hover {
+	color:#ffffff;
+}
