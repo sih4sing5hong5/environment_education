@@ -6,19 +6,19 @@
     {% for 題目 in 題目陣列 %}
     	<input type='hidden' name='id[{{forloop.counter0}}]' value='{{題目.題號}}'>
     {% endfor %}
-	<table>
+	<ul>
     {% for 題目 in 題目陣列 %}
-    	<tr>
-    	<td colspan=4>{{ forloop.counter }}. {{ 題目.題目 }}</td>
-    	</tr>
-    	<tr>
-    	<td><input type="radio" name="ans[{{forloop.counter0}}]" value="1"> {{ 題目.選項1 }}</td>
-    	<td><input type="radio" name="ans[{{forloop.counter0}}]" value="2"> {{ 題目.選項2 }}</td>
-    	<td><input type="radio" name="ans[{{forloop.counter0}}]" value="3"> {{ 題目.選項3 }}</td>
-    	<td><input type="radio" name="ans[{{forloop.counter0}}]" value="4"> {{ 題目.選項4 }}</td>
-        </tr>
+    	<ul>
+    	<li colspan=4 class="li01">{{ forloop.counter }}. {{ 題目.題目 }}</td>
+    	</ul>
+    	<ul>
+    	<li><input type="radio" name="ans[{{forloop.counter0}}]" value="1"> {{ 題目.選項1 }}</li>
+    	<li><input type="radio" name="ans[{{forloop.counter0}}]" value="2"> {{ 題目.選項2 }}</li>
+    	<li><input type="radio" name="ans[{{forloop.counter0}}]" value="3"> {{ 題目.選項3 }}</li>
+    	<li><input type="radio" name="ans[{{forloop.counter0}}]" value="4"> {{ 題目.選項4 }}</li>
+        </ul>
     {% endfor %}
-    </table>
+    </ul>
     <input type='submit' value='送出'/>
     </form>
 {% endblock %}
