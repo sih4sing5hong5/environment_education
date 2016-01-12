@@ -8,15 +8,11 @@
     {% endfor %}
 	<ul>
     {% for 題目 in 題目陣列 %}
-    	<ul>
     	<li colspan=4 class="li01">{{ forloop.counter }}. {{ 題目.題目 }}</td>
-    	</ul>
-    	<ul>
     	<li><input type="radio" name="ans[{{forloop.counter0}}]" value="1"> {{ 題目.選項1 }}</li>
     	<li><input type="radio" name="ans[{{forloop.counter0}}]" value="2"> {{ 題目.選項2 }}</li>
     	<li><input type="radio" name="ans[{{forloop.counter0}}]" value="3"> {{ 題目.選項3 }}</li>
     	<li><input type="radio" name="ans[{{forloop.counter0}}]" value="4"> {{ 題目.選項4 }}</li>
-        </ul>
     {% endfor %}
     </ul>
     <input type='submit' value='送出'/>
