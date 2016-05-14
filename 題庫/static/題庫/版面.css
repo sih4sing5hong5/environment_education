@@ -13,7 +13,9 @@ a:visited {color:#aa0000}
 ul {
 	list-style:none;}
 li {
-	padding:10px 0 0 0;}
+	padding:10px 0 0 0;
+	color:#ffffff;
+}
 .p-題目 {
 	font-size:150%;
 	color:#ffffff;}
