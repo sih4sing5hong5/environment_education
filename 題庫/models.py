@@ -12,7 +12,7 @@ import xlrd
 class xls檔案表(models.Model):
     xls檔案 = models.FileField()
     收錄時間 = models.DateTimeField(auto_now_add=True)
-    揀題目數量 = 80
+    揀題目數量 = 65
 
     @classmethod
     def 匯入xls(cls, xls檔案, 名=None):
