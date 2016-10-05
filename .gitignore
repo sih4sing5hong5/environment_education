@@ -58,3 +58,5 @@ target/
 /.settings/
 /venv/
 /xls檔案/
+/node_modules/
+node_modules
