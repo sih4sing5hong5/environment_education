@@ -1,11 +1,13 @@
 
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
+from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from 題庫.models import xls檔案表
 from 題庫.models import 作答紀錄表
-from django.http.response import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required(login_url='/accounts/facebook/login')
@@ -62,14 +64,8 @@ def 搶答題目(request):
 @login_required(login_url='/accounts/facebook/login')
 def 送出搶答(request):
     xls檔案 = xls檔案表.上新的檔案()
-    try:
-        答對=request.POST['答對']
-    except:
-        答對=[]
-    try:
-        答錯=request.POST['答錯']
-    except:
-        答錯=[]
+    答對=json.loads(request.POST['答對'])
+    答錯=json.loads(request.POST['答錯'])
     作答紀錄表.試驗結果(request.user, xls檔案, 答錯, 答對)
     return JsonResponse({'結果': '好'})
 
