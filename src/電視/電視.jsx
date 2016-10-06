@@ -2,6 +2,7 @@ import React from 'react';
 import Promise from 'bluebird';
 var superagent = require('superagent-promise')(require('superagent'), Promise);
 import './電視.css';
+import 後端 from '../App/後端';
 
 import Debug from 'debug';
 var debug = Debug('env:電視');
@@ -11,20 +12,20 @@ export default class 電視 extends React.Component {
     super(props);
     this.state = {
       全部題目: [
-        { '題號': '10', '題目': '500', '選項1': 510, '選項2': 5102, '選項3': 5103, '選項4': 5104, '答案': 1 },
-        { '題號': '20', '題目': '500', '選項1': 510, '選項2': 5102, '選項3': 510, '選項4': 5104, '答案': 3 },
-        { '題號': '30', '題目': '500', '選項1': 510, '選項2': 510, '選項3': 5103, '選項4': 5104, '答案': 2 },
-        { '題號': '40', '題目': '500', '選項1': 510, '選項2': 5102, '選項3': 5103, '選項4': 510, '答案': 4 },
+        // { '題號': '10', '題目': '500', '選項1': 510, '選項2': 5102, '選項3': 5103, '選項4': 5104, '答案': 1 },
+        // { '題號': '20', '題目': '500', '選項1': 510, '選項2': 5102, '選項3': 510, '選項4': 5104, '答案': 3 },
+        // { '題號': '30', '題目': '500', '選項1': 510, '選項2': 510, '選項3': 5103, '選項4': 5104, '答案': 2 },
+        // { '題號': '40', '題目': '500', '選項1': 510, '選項2': 5102, '選項3': 5103, '選項4': 510, '答案': 4 },
       ],
       這馬第幾題: -1,
       春幾秒: 10,
       狀態:'猶未開始',
     };
+    this.掠();
   }
 
   componentWillMount() {
     this.減秒timer = setInterval(this.減秒.bind(this), 1000);
-    this.掠();
   }
 
   componentWillUnmount() {
@@ -32,9 +33,10 @@ export default class 電視 extends React.Component {
   }
 
   掠() {
-    // superagent.get(後端網址.狀態網址())
-    //   .then(({ body }) => (this.setState(body)))
-    //   .catch((err) => (debug(err)));
+    superagent.get(後端.網址()+'搶答題目')
+        .withCredentials()
+      .then(({ body }) => (this.setState(body)))
+      .catch((err) => (debug(err)));
   }
 
   開始() {
@@ -42,10 +44,11 @@ export default class 電視 extends React.Component {
   }
 
   減秒() {
+    let { 狀態 } = this.state;
     let 新秒=this.state.春幾秒 - 1;
     this.setState({ 春幾秒:新秒});
     if(新秒<=0 && 狀態=='比賽')
-      this.setState({ 狀態:'毋著'});
+      this.毋著();
   }
 
   選(選項) {
@@ -57,35 +60,54 @@ export default class 電視 extends React.Component {
         春幾秒: 10,
       });
     else
-      this.setState({ 狀態:'毋著'});
+      this.毋著();
   }
-
+  毋著(){
+      this.setState({ 狀態:'毋著'});
+      let { 全部題目, 這馬第幾題 } = this.state;
+      let 全部題號=全部題目.filter((題目,i)=>(i<這馬第幾題)).map((題目)=>(題目.題號))
+      let 內容={
+        答對: JSON.stringify(全部題號),
+        答錯: JSON.stringify([全部題目[這馬第幾題].題號]),
+      }
+      superagent.post(後端.網址() + '送出搶答')
+        .withCredentials()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .send(內容)
+        .then(({body})=>(1))
+        .catch((err)=>debug(err));
+  }
   render() {
     let { 狀態,全部題目, 這馬第幾題, 春幾秒 } = this.state;
     if (狀態=='猶未開始' && 全部題目.length==0)    {
       return (
         <div>
-        題目載入中
+          <h1 className="ui dividing header">環保知識挑戰擂台賽</h1>    
+          題目載入中
         </div>
         );
     }
     if (狀態=='猶未開始')    {
       return (
         <div>
+          <h1 className="ui dividing header">環保知識挑戰擂台賽</h1>    
         <button className='ui massive button green' onClick={this.開始.bind(this)}>開始</button>
         </div>
         );
     }
     if (狀態=='毋著')    {
-      let 全部題號=全部題目.filter((題目,i)=>(i<這馬第幾題)).map((題目)=>(題目.題號))
       return (
         <div>
-          答錯  {全部題號} {全部題目[這馬第幾題].題號}
+          <h1 className="ui dividing header">{全部題目[這馬第幾題].題號}答錯了</h1>    
         </div>
         );
     }
     if (這馬第幾題 >=全部題目.length)    {
       let 全部題號=全部題目.filter((題目,i)=>(i<=這馬第幾題)).map((題目)=>(題目.題號))
+      let 內容={
+        答對:全部題號,
+        答錯:[],
+      }
       return (
         <div>
           都答對  {全部題號}
