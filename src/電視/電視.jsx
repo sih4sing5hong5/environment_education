@@ -119,7 +119,7 @@ export default class 電視 extends React.Component {
     if (狀態 == '毋著')    {
       let 毋著題 = 全部題目[這馬第幾題];
       return (
-        <div>
+      <div id='電視'>
           <h1 className="ui dividing header">第{這馬第幾題 + 1}題答錯了</h1>   
           <h2 className="ui  header">{毋著題.題目}</h2>    
         <ul>
@@ -146,18 +146,18 @@ export default class 電視 extends React.Component {
     let 題目 = 全部題目[這馬第幾題];
     return (
       <div id='電視'>
-        <h1 className="ui dividing header">{題目.題目}</h1>  
+        <h1 className="ui dividing header">{這馬第幾題+1}. {題目.題目}</h1>  
         <ul>
          <li>{題目.選項1}</li>
          <li>{題目.選項2}</li>
          <li>{題目.選項3}</li>
          <li>{題目.選項4}</li>
         </ul>
-        <div>{春幾秒}</div>
         <button className='ui massive button green' onClick={this.選.bind(this, 1)}>1</button>
         <button className='ui massive button green' onClick={this.選.bind(this, 2)}>2</button>
         <button className='ui massive button green' onClick={this.選.bind(this, 3)}>3</button>
         <button className='ui massive button green' onClick={this.選.bind(this, 4)}>4</button>
+        <span>{春幾秒}</span>
       </div>
     );
   }
