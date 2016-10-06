@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from 題庫.models import xls檔案表
 from 題庫.models import 作答紀錄表
 from django.http.response import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required(login_url='/accounts/facebook/login')
@@ -57,6 +58,7 @@ def 搶答題目(request):
         全部.append(model_to_dict(題目))
     return JsonResponse({'全部題目': 全部})
 
+@csrf_exempt
 @login_required(login_url='/accounts/facebook/login')
 def 送出搶答(request):
     xls檔案 = xls檔案表.上新的檔案()
