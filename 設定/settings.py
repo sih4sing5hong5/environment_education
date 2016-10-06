@@ -121,3 +121,5 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 LOGOUT_ON_GET = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CORS_ORIGIN_ALLOW_ALL = True
