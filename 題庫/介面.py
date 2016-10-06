@@ -1,8 +1,10 @@
 
 from django.contrib.auth.decorators import login_required
+from django.forms.models import model_to_dict
 from django.shortcuts import render, redirect
 from 題庫.models import xls檔案表
 from 題庫.models import 作答紀錄表
+from django.http.response import JsonResponse
 
 
 @login_required(login_url='/accounts/facebook/login')
@@ -48,8 +50,16 @@ def 看解釋(request, 題號):
     })
 
 
+@login_required(login_url='/accounts/facebook/login')
+def 搶答題目(request):
+    全部 = []
+    for 題目 in xls檔案表.上新的檔案().隨機揀題號():
+        全部.append(model_to_dict(題目))
+    return JsonResponse({'全部題目': 全部})
+
+
 def _管理員看著的作答狀況(user):
-    if (user.email) in ('ecologist0721@yahoo.com.tw','ihcaoe@gmail.com'):
+    if (user.email) in ('ecologist0721@yahoo.com.tw', 'ihcaoe@gmail.com'):
         return 作答紀錄表.揣出全部作答狀況()
     return []
 
