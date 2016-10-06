@@ -62,9 +62,16 @@ def 搶答題目(request):
 @login_required(login_url='/accounts/facebook/login')
 def 送出搶答(request):
     xls檔案 = xls檔案表.上新的檔案()
-    print(request.POST['答對'])
-    作答紀錄表.試驗結果(request.user, xls檔案, request.POST['答錯'], request.POST['答對'])
-    return redirect('看作答紀錄')
+    try:
+        答對=request.POST['答對']
+    except:
+        答對=[]
+    try:
+        答錯=request.POST['答錯']
+    except:
+        答錯=[]
+    作答紀錄表.試驗結果(request.user, xls檔案, 答錯, 答對)
+    return JsonResponse({'結果': '好'})
 
 def _管理員看著的作答狀況(user):
     if (user.email) in ('ecologist0721@yahoo.com.tw', 'ihcaoe@gmail.com'):
