@@ -3,8 +3,8 @@
     "start": "node devServer.js",
     "test": "jscs *.js src/",
     "reformat": "jscs -x *.js src/",
-    "build": "cd semantic/ && gulp build",
-    "deploy": "mkdir -p build && cp -r semantic/ jquery.svg/ *.html *.css ZZ.svg build && gh-pages -d build"
+    "build": "mkdir -p build;rm -f build/* && NODE_ENV=production webpack --config webpack.config.prod.js && cp index.html  build/ && cp index.html build/404.html",
+    "deploy": "npm run build && (echo 'xn--l3uo82c.xn--0nsq21at2lnvl.xn--v0qr21b.xn--kpry57d' > build/CNAME) && gh-pages -d build/"
   },
   "dependencies": {
   },
