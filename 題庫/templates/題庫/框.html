@@ -14,6 +14,8 @@
     <form method='post' action="{% url 'account_logout' %}">
 	    <a href='{% url '看作答紀錄' %}'>看作答紀錄</a>
 	    <a href='{% url '練習' %}'>練習</a>
+	    <a href="http://搶答.環境教育.意傳.台灣" target="_blank">搶答練習</a>
+	    
     	 {% csrf_token %}
     	<input type='submit' value='{{ 名 }}登出'/>
    	</form>
