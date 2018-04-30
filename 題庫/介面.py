@@ -10,7 +10,7 @@ from 題庫.models import xls檔案表
 from 題庫.models import 作答紀錄表
 
 
-@login_required(login_url='/accounts/facebook/login')
+@login_required(login_url='/accounts/login')
 def 練習(request):
     網址 = '題庫/作答.html'
     return render(request, 網址, {
@@ -19,7 +19,7 @@ def 練習(request):
     })
 
 
-@login_required(login_url='/accounts/facebook/login')
+@login_required(login_url='/accounts/login')
 def 送出答案(request):
     xls檔案 = xls檔案表.上新的檔案()
     答對 = []
@@ -33,7 +33,7 @@ def 送出答案(request):
     return redirect('看作答紀錄')
 
 
-@login_required(login_url='/accounts/facebook/login')
+@login_required(login_url='/accounts/login')
 def 看作答紀錄(request):
     網址 = '題庫/作答結果.html'
     return render(request, 網址, {
@@ -43,7 +43,7 @@ def 看作答紀錄(request):
     })
 
 
-@login_required(login_url='/accounts/facebook/login')
+@login_required(login_url='/accounts/login')
 def 看解釋(request, 題號):
     xls檔案 = xls檔案表.上新的檔案()
     網址 = '題庫/解釋.html'
@@ -53,7 +53,7 @@ def 看解釋(request, 題號):
     })
 
 
-@login_required(login_url='/accounts/facebook/login')
+@login_required(login_url='/accounts/login')
 def 搶答題目(request):
     全部 = []
     for 題目 in xls檔案表.上新的檔案().隨機揀題號():
@@ -61,7 +61,7 @@ def 搶答題目(request):
     return JsonResponse({'全部題目': 全部})
 
 @csrf_exempt
-@login_required(login_url='/accounts/facebook/login')
+@login_required(login_url='/accounts/login')
 def 送出搶答(request):
     xls檔案 = xls檔案表.上新的檔案()
     答對=json.loads(request.POST['答對'])
